@@ -50,14 +50,20 @@ const createPath = (points: { x: number; y: number }[]): string => {
   let path = `M${points[0].x},${points[0].y}`;
 
   for (let i = 1; i < points.length; i++) {
-    const prevPoint = points[i - 1];
+    const startPoint = points[i - 1];
     const currentPoint = points[i];
+    const previousPoint = points[Math.max(0, i - 2)];
+    const nextPoint = points[Math.min(points.length - 1, i + 1)];
+    const controlPoint1 = {
+      x: startPoint.x + (currentPoint.x - previousPoint.x) / 6,
+      y: startPoint.y + (currentPoint.y - previousPoint.y) / 6,
+    };
+    const controlPoint2 = {
+      x: currentPoint.x - (nextPoint.x - startPoint.x) / 6,
+      y: currentPoint.y - (nextPoint.y - startPoint.y) / 6,
+    };
 
-    // Create smooth curves using quadratic bezier
-    const cpx = (prevPoint.x + currentPoint.x) / 2;
-    const cpy = prevPoint.y;
-
-    path += ` Q${cpx},${cpy} ${currentPoint.x},${currentPoint.y}`;
+    path += ` C${controlPoint1.x},${controlPoint1.y} ${controlPoint2.x},${controlPoint2.y} ${currentPoint.x},${currentPoint.y}`;
   }
 
   return path;
@@ -151,7 +157,7 @@ export const LineChart = ({ data, config = {}, style }: Props) => {
   // Use measured width or fallback to config width or default
   const chartWidth = containerWidth || config.width || 300;
 
-  const primaryColor = useColor('primary');
+  const graphColor = useColor('lime');
   const mutedColor = useColor('mutedForeground');
 
   const animationProgress = useSharedValue(0);
@@ -263,12 +269,12 @@ export const LineChart = ({ data, config = {}, style }: Props) => {
                 <LinearGradient id='gradient' x1='0%' y1='0%' x2='0%' y2='100%'>
                   <Stop
                     offset='0%'
-                    stopColor={primaryColor}
+                    stopColor={graphColor}
                     stopOpacity='0.3'
                   />
                   <Stop
                     offset='100%'
-                    stopColor={primaryColor}
+                    stopColor={graphColor}
                     stopOpacity='0.05'
                   />
                 </LinearGradient>
@@ -338,7 +344,7 @@ export const LineChart = ({ data, config = {}, style }: Props) => {
             {/* Line path */}
             <AnimatedPath
               d={pathData}
-              stroke={primaryColor}
+              stroke={graphColor}
               strokeWidth={2}
               fill='none'
               strokeLinecap='round'
@@ -352,7 +358,7 @@ export const LineChart = ({ data, config = {}, style }: Props) => {
                 key={`point-${index}`}
                 x={point.x}
                 y={point.y}
-                color={primaryColor}
+                color={graphColor}
                 index={index}
                 animationProgress={animationProgress}
               />
@@ -393,7 +399,7 @@ export const LineChart = ({ data, config = {}, style }: Props) => {
                   cx={points[activePointIndex].x}
                   cy={points[activePointIndex].y}
                   r={6}
-                  fill={primaryColor}
+                  fill={graphColor}
                   stroke='white'
                   strokeWidth={2}
                 />

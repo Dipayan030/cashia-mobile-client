@@ -49,6 +49,8 @@ const lightColors = {
   // Default buttons, links, Send button, selected tabs
   blue: '#007AFF',
 
+  lime: '#7ccf00',
+
   // Success states, FaceTime buttons, completed tasks
   green: '#34C759',
 
@@ -134,6 +136,8 @@ const darkColors = {
 
   // Default buttons, links, Send button, selected tabs
   blue: '#0A84FF',
+
+  lime: '#5ea500',
 
   // Success states, FaceTime buttons, completed tasks
   green: '#30D158',

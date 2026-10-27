@@ -3,18 +3,30 @@ import React from 'react';
 import { useFonts as useInter, Inter_400Regular, Inter_700Bold } from "@expo-google-fonts/inter";
 import { Image } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 type props = {
     pageTitle: string,
-    name: string | null | undefined,
-    avatar: string | null | undefined
+    // name: string | null | undefined,
+    // avatar: string | null | undefined
 }
 
-export default function Header({ pageTitle, name, avatar }: props) {
+export default function Header({ pageTitle }: props) {
     const [interLoaded] = useInter({
         Inter_400Regular,
         Inter_700Bold,
     });
+    const [ name, setName ] = useState<string | undefined>('');
+    const [ avatar, setAvatar ] = useState<string | undefined>('');
+
+    useEffect(() => {
+        supabase.auth.getUser().then(({ data: { user } }) => {
+            setName(user?.user_metadata?.full_name?.trim().split(' ')[0]);
+            setAvatar(user?.user_metadata?.avatar_url);
+        });
+    }, []);
+
     if (!interLoaded) {
         return null; 
     };
