@@ -7,6 +7,12 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import {
+  RobotoMono_400Regular,
+  RobotoMono_500Medium,
+  RobotoMono_600SemiBold,
+  RobotoMono_700Bold,
+} from '@expo-google-fonts/roboto-mono';
 import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Session } from '@supabase/supabase-js';
@@ -21,6 +27,10 @@ export default function RootLayout() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
+    RobotoMono_400Regular,
+    RobotoMono_500Medium,
+    RobotoMono_600SemiBold,
+    RobotoMono_700Bold,
   });
   
   const segments = useSegments();

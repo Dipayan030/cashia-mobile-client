@@ -11,6 +11,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useColor } from '@/hooks/useColor';
 import { StatusBar } from 'expo-status-bar';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 export default function HomeScreen() {
   const color = useColor('lime');
@@ -21,97 +22,108 @@ export default function HomeScreen() {
   };
 
   const data = [
-    { x: 'Jan', y: 100, label: 'January' },
-    { x: 'Feb', y: 120, label: 'February' },
-    { x: 'Mar', y: 110, label: 'March' },
-    { x: 'Apr', y: 130, label: 'April' },
-    { x: 'May', y: 125, label: 'May' },
+    { x: 'Mon', y: 100, label: 'Mon' },
+    { x: 'Feb', y: 120, label: 'Tue' },
+    { x: 'Mar', y: 110, label: 'Wed' },
+    { x: 'Apr', y: 130, label: 'Thu' },
+    { x: 'May', y: 100, label: 'Fri' },
+    { x: 'May', y: 110, label: 'Sat' },
+    { x: 'May', y: 105, label: 'Sun' },
   ];
 
   return (
-    <SafeAreaView className="flex flex-col bg-indigo-50 justify-between px-6 py-6">
+    <SafeAreaView className="flex flex-col bg-indigo-50 justify-between py-6">
       <StatusBar></StatusBar>
-      <Header pageTitle='Dashboard'/>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="flex-grow pb-40">
-        <View className='bg-lime-300 p-6 flex flex-col gap-8 rounded-xl mt-6'>
+      <Header marginX={'mx-6'}/>
+      <View className='px-6 mt-4'>
+        <View className='bg-emerald-900 p-6 flex flex-col gap-6 rounded-2xl'>
           <View className='flex flex-row justify-between'>
-            <Text className='text-green-950/80 font-inter'>Current Balance</Text>
-            <Pressable className='h-10 w-10 rounded-full bg-green-950 flex justify-center items-center'>
-              <Feather name="arrow-up-right" size={24} color="white" />
-            </Pressable>
+            <Text className='text-white/50 font-inter'>Current Balance</Text>
+            {/* <Pressable className='h-10 w-10 rounded-full bg-lime-300 flex justify-center items-center'>
+              <Feather name="arrow-up-right" size={24} color="black" />
+            </Pressable> */}
           </View>
-          <View className='flex flex-row gap-1'><Text className='font-inter text-4xl text-green-950'>4500.00</Text><Text className='text-green-950 font-inter text-lg'>INR</Text></View>
+          <View className='flex flex-row gap-1'><Text className='font-roboto-mono-medium text-5xl text-white'>₹4500.00</Text></View>
         </View>
-        <View className='p-6 bg-white flex flex-col rounded-xl mt-6'>
-          <View className='flex flex-row justify-between'>
-            <Text className='text-green-950/80 font-inter'>Spendings over last 4 days</Text>
-            <Pressable className='h-10 w-10 rounded-full bg-lime-300 flex justify-center items-center'>
-              <Feather name="arrow-up-right" size={24} color="#032e15" />
-            </Pressable>
+      </View>
+      <ScrollView className='flex-grow mt-6 bg-white rounded-t-[2rem] px-8 py-6 '>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="flex-grow pb-40">
+          <View className='bg-white flex flex-col rounded-xl mt-6'>
+            <Text className='text-green-950 font-inter text-lg mb-4'>Spendings</Text>
+            <View className="flex flex-row justify-between items-center">
+              <View className='flex flex-row'>
+                <Text className='font-roboto-mono-medium text-green-950 text-3xl'>2000.00</Text>
+                <Text className='font-inter text-xs text-green-950 mt-1 ml-1'>INR</Text>
+              </View>
+              <Pressable className='w-24 py-2 bg-green-950/5 rounded-full flex flex-row items-center justify-center'> 
+                <Text className='text-green-950/40 text-xs'>7 Days</Text>
+                <EvilIcons name="chevron-down" size={18} color="#1a2e0566" />
+              </Pressable>
+            </View>
+            <AreaChart
+              data={data}
+              style={{
+                borderColor: color,
+                outlineColor: color,
+              }}
+              config={{
+                height: 200,
+                showGrid: false,
+                showLabels: true,
+                animated: true,
+                showYLabels: false
+              }}
+            />
           </View>
-          <View className="flex flex-row items-start"><Text className='font-inter text-green-950 text-2xl'>2000</Text><Text className='font-inter text-xs text-green-950 mt-1 ml-1'>INR</Text></View>
-          <AreaChart
-            data={data}
-            style={{
-              borderColor: color,
-              outlineColor: color,
-            }}
-            config={{
-              height: 200,
-              showGrid: false,
-              showLabels: false,
-              animated: true,
-              showYLabels: false
-            }}
-          />
-        </View>
-        <View className='p-6 bg-white rounded-xl mt-6'>
-          <View className='flex flex-row justify-between'>
-            <Text className='text-green-950/80 font-inter'>Transaction History</Text>
-            <Pressable className='h-10 w-10 rounded-full bg-lime-300 flex justify-center items-center'>
-              <Feather name="arrow-up-right" size={24} color="#032e15" />
-            </Pressable>
-          </View>
-          <View className='flex flex-col '>
-            <View className='py-3 flex flex-row justify-between items-center border-b border-slate-200'>
-              <View className='flex flex-row gap-4 items-center'>
-                <View className='p-3 bg-slate-100 rounded-full'>
-                  <Ionicons name="fast-food-outline" size={24} color="#314158" />
-                </View>
-                <Text className='font-inter text-lg'>Dosa</Text>
-              </View>
-              <Text className="font-inter-medium text-rose-500 text-xl">-60</Text>
+          <View className='py-6 bg-white rounded-xl mt-6 mb-40'>
+            <View className='flex flex-row justify-between mb-4'>
+              <Text className='text-green-950 font-inter text-lg'>Transactions</Text>
+              <Pressable className='w-24 py-2 bg-green-950/5 rounded-full flex flex-row items-center justify-center'> 
+                <Text className='text-green-950/40 text-xs'>See all</Text>
+              </Pressable>
             </View>
-            <View className='py-3 flex flex-row justify-between items-center border-b border-slate-200'>
-              <View className='flex flex-row gap-4 items-center'>
-                <View className='p-3 bg-slate-100 rounded-full'>
-                  <MaterialIcons name="ondemand-video" size={24} color="#314158" />
+            <View className='flex flex-col gap-4'>
+              <View className='p-4 flex flex-row justify-between items-center bg-[#1a2e0505] rounded-2xl'>
+                <View className='flex flex-row gap-4 items-center'>
+                  <View className='p-3 bg-white rounded-full'>
+                    <Ionicons name="fast-food-outline" size={24} color="#314158" />
+                  </View>
+                  <View>
+                    <Text className='font-inter text-lg'>Dosa</Text>
+                    <Text className='font-inter text-xs text-green-950/40'>Food</Text>
+                  </View>
                 </View>
-                <Text className='font-inter text-lg'>Spider-Man movie</Text>
+                <Text className="font-roboto-mono-medium text-green-950/80 text-xl mr-4">-$60</Text>
               </View>
-              <Text className="font-inter-medium text-rose-500 text-xl">-200</Text>
-            </View>
-            <View className='py-3 flex flex-row justify-between items-center border-b border-slate-200'>
-              <View className='flex flex-row gap-4 items-center'>
-                <View className='p-3 bg-slate-100 rounded-full'>
-                  <MaterialIcons name="ondemand-video" size={24} color="#314158" />
+              <View className='p-4 flex flex-row justify-between items-center bg-[#1a2e0505] rounded-2xl'>
+                <View className='flex flex-row gap-4 items-center'>
+                  <View className='p-3 bg-white rounded-full'>
+                    <Ionicons name="fast-food-outline" size={24} color="#314158" />
+                  </View>
+                  <View>
+                    <Text className='font-inter text-lg'>Dosa</Text>
+                    <Text className='font-inter text-xs text-green-950/40'>Food</Text>
+                  </View>
                 </View>
-                <Text className='font-inter text-lg'>Spider-Man movie</Text>
+                <Text className="font-roboto-mono-medium text-green-950/80 text-xl mr-4">-$60</Text>
               </View>
-              <Text className="font-inter-medium text-rose-500 text-xl">-100</Text>
-            </View>
-            <View className='py-3 flex flex-row justify-between items-center border-b border-slate-200'>
-              <View className='flex flex-row gap-4 items-center'>
-                <View className='p-3 bg-slate-100 rounded-full'>
-                  <MaterialIcons name="ondemand-video" size={24} color="#314158" />
+              <View className='p-4 flex flex-row justify-between items-center bg-[#1a2e0505] rounded-2xl'>
+                <View className='flex flex-row gap-4 items-center'>
+                  <View className='p-3 bg-white rounded-full'>
+                    <Ionicons name="fast-food-outline" size={24} color="#314158" />
+                  </View>
+                  <View>
+                    <Text className='font-inter text-lg'>Dosa</Text>
+                    <Text className='font-inter text-xs text-green-950/40'>Food</Text>
+                  </View>
                 </View>
-                <Text className='font-inter text-lg'>Spider-Man movie</Text>
+                <Text className="font-roboto-mono-medium text-green-950/80 text-xl mr-4">-$60</Text>
               </View>
-              <Text className="font-inter-medium text-rose-500 text-xl">-90</Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </ScrollView>
+      
       
       {/* <TouchableOpacity activeOpacity={0.8} onPress={handleSignOut} className="w-full bg-red-500/10 border border-red-500/20 h-14 rounded-xl items-center justify-center active:bg-red-500/20">
         <Text className="text-red-400 font-semibold text-base">Sign Out of Account</Text>
