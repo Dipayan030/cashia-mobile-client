@@ -1,34 +1,37 @@
 import React from 'react'
 import { Pressable, View, Text } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import Feather from '@expo/vector-icons/Feather';
 
-function NumPad() {
-  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'cross', '0', 'enter']
+interface NumpadProps {
+  onKeyPress: ( value: string ) => void;
+}
+
+function NumPad({ onKeyPress }: NumpadProps) {
+  const keys = [['1','2','3'],['4','5','6'],['7','8','9']];
 
   return (
-    <View className="items-center gap-3">
-      {[0, 1, 2, 3].map((row) => (
-        <View key={row} className="flex-row gap-3">
-          {keys.slice(row * 3, row * 3 + 3).map((key) => (
-            <Pressable
-              key={key}
-              className="h-16 w-24 items-center justify-center rounded-full bg-green-950/5"
-              accessibilityRole="button"
-              accessibilityLabel={key === 'cross' ? 'Clear' : key === 'enter' ? 'Enter' : key}
-            >
-              {key === 'cross' || key === 'enter' ? (
-                <FontAwesome6
-                  name={key === 'cross' ? 'xmark' : 'arrow-right'}
-                  size={20}
-                  color="#14532d"
-                />
-              ) : (
-                <Text className="text-xl font-roboto-mono text-green-950">{key}</Text>
-              )}
+    <View className="flex flex-col items-center gap-4 pt-4">
+      {[0,1,2].map((row) => (
+        <View key={row} className='flex flex-row gap-4'>
+          {keys[row].map((num) => (
+            <Pressable key={num} onPress={() => onKeyPress(num)} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
+              <Text className='text-green-950 font-roboto-mono'>{num}</Text>
             </Pressable>
           ))}
         </View>
       ))}
+      <View className='flex flex-row gap-4'>
+        <Pressable onPress={() => onKeyPress('enter')} key={'enter'} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
+          <Feather name="arrow-right" size={18} color="black" />
+        </Pressable>
+        <Pressable onPress={() => onKeyPress('0')} key={'0'} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
+          <Text className='text-green-950 font-roboto-mono'>0</Text>
+        </Pressable>
+        <Pressable onPress={() => onKeyPress('delete')} key={'delete'} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
+          <Feather name="delete" size={18} color="black" />
+        </Pressable>
+      </View>
     </View>
   )
 }

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, Text, View } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import NumPad from '@/components/NumPad';
+import { TextInput } from 'react-native-gesture-handler';
 
 function LogTypeTab({
   logType,
@@ -51,9 +52,20 @@ export default function AddScreen() {
     { name: 'Scan', icon: 'camera' },
     { name: 'Voice', icon: 'microphone' }
   ] as const;
+  const [ num, setNum ] = useState('0');
+  
+  const enterNumber = ( currNum: string ) => {
+    if(currNum === 'enter'){
+      // Number(num);
+    } else if(currNum === 'delete') {
+      setNum(num.slice(0,-1));
+    } else {
+      setNum(num+currNum);
+    }
+  } 
 
   return (
-    <SafeAreaView className="flex flex-col bg-indigo-50 py-6 h-full">
+    <SafeAreaView className="flex flex-col bg-indigo-50 pt-6 pb-20 h-full">
         <StatusBar></StatusBar>
         <Header marginX='mx-6'/>
         <View className='flex flex-row justify-center items-start mt-4 gap-2'>
@@ -90,7 +102,18 @@ export default function AddScreen() {
             })}
           </View>
         </View>
-        <NumPad></NumPad>
+        <View className='flex-1 justify-end items-center'>
+          <View className='px-3 min-w-60 h-16 mx-24 bg-green-950/5 border-b-2 border-b-lime-400 rounded-lg flex flex-row items-center justify-center'>
+            <Text className='text-green-950 font-roboto-mono text-3xl'>{num}</Text>
+          </View>
+          <TextInput 
+            className='mx-12 mt-6 text-green-950 text-center text-2xl min-w-36'
+            placeholder='Note' 
+            placeholderTextColor="#64748b"
+          />
+          <Text className='text-lg text-green-950/40 mb-6'>Transportation</Text>
+          <NumPad onKeyPress={enterNumber}></NumPad>
+        </View>
     </SafeAreaView>
   );
 }
