@@ -5,7 +5,7 @@ import { View, TouchableOpacity } from 'react-native';
 
 function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
-    <View className="absolute bottom-4 left-4 right-4 flex-row items-center justify-around bg-green-950 py-3.5 px-2 rounded-full shadow-xl">
+    <View className="absolute bottom-8 left-4 right-4 flex-row items-center justify-around bg-green-950 py-3.5 px-2 rounded-full shadow-xl">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label = options.title !== undefined ? options.title : route.name;

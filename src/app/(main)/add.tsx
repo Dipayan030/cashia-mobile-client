@@ -65,7 +65,7 @@ export default function AddScreen() {
   } 
 
   return (
-    <SafeAreaView className="flex flex-col bg-indigo-50 pt-6 pb-20 h-full">
+    <SafeAreaView className="flex flex-col bg-indigo-50 pt-6 pb-32 h-full">
         <StatusBar></StatusBar>
         <Header marginX='mx-6'/>
         <View className='flex flex-row justify-center items-start mt-4 gap-2'>
