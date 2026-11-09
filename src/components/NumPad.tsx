@@ -1,6 +1,5 @@
 import React from 'react'
 import { Pressable, View, Text } from 'react-native'
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import Feather from '@expo/vector-icons/Feather';
 
 interface NumpadProps {
@@ -16,7 +15,7 @@ function NumPad({ onKeyPress }: NumpadProps) {
         <View key={row} className='flex flex-row gap-4'>
           {keys[row].map((num) => (
             <Pressable key={num} onPress={() => onKeyPress(num)} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
-              <Text className='text-green-950 font-roboto-mono'>{num}</Text>
+              <Text className='text-green-950 font-roboto-mono text-lg'>{num}</Text>
             </Pressable>
           ))}
         </View>
@@ -26,7 +25,7 @@ function NumPad({ onKeyPress }: NumpadProps) {
           <Feather name="arrow-right" size={18} color="black" />
         </Pressable>
         <Pressable onPress={() => onKeyPress('0')} key={'0'} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
-          <Text className='text-green-950 font-roboto-mono'>0</Text>
+          <Text className='text-green-950 font-roboto-mono text-lg'>0</Text>
         </Pressable>
         <Pressable onPress={() => onKeyPress('delete')} key={'delete'} className='h-12 w-24 rounded-full flex justify-center items-center bg-green-950/5'>
           <Feather name="delete" size={18} color="black" />
